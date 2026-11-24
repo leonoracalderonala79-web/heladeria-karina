@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="caja">
+  <h2>✅ ¡Pedido registrado!</h2>
+  <p>Pedido N.º <strong>{{ p.id }}</strong> a nombre de {{ p.cliente }}</p>
+  <p>{{ p.detalle }}</p>
+  <p>Total: S/ {{ '%.2f'|format(p.total) }} · Recojo a las <strong>{{ p.hora_recojo }}</strong></p>
+  <p>Método de pago: <strong>{{ p.metodo|capitalize }}</strong> · Estado del pago: <strong>{{ p.pago }}</strong></p>
+  <p>Te esperamos en {{ N.direccion }}.</p>
+  <a class="btn" href="{{ url_for('inicio') }}">Volver al inicio</a>
+</div>
+{% endblock %}

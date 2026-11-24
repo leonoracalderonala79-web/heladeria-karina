@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block contenido %}
+<!-- PROMOCIÓN DESTACADA -->
+<section class="promo">
+  {% if C.promo_imagen %}<img src="{{ src_img(C.promo_imagen) }}" alt="{{ C.promo_titulo }}">{% endif %}
+  <div><h2>{{ C.promo_titulo }}</h2><p>{{ C.promo_texto }}</p></div>
+</section>
+<h2 class="titulo">Nuestros productos</h2>
+<div class="filtros">
+  <a class="{{ 'activo' if not cat }}" href="{{ url_for('inicio') }}">Todos</a>
+  {% for c in categorias %}<a class="{{ 'activo' if c == cat }}" href="{{ url_for('inicio', cat=c) }}">{{ c }}</a>{% endfor %}
+</div>
+<div class="grid">
+  {% for p in productos %}
+  <article class="tarjeta">
+    {% if p.imagen %}<img class="foto" src="{{ src_img(p.imagen) }}" alt="{{ p.nombre }}">
+    {% else %}<div class="icono">{{ p.icono }}</div>{% endif %}
+    <small>{{ p.cat }}</small>
+    <h3>{{ p.nombre }}</h3>
+    <p>{{ p.descr }}</p>
+    <strong>S/ {{ '%.2f'|format(p.precio) }}</strong>
+    <a class="btn" href="{{ url_for('agregar', pid=p.id) }}">Agregar</a>
+  </article>
+  {% endfor %}
+</div>
+<!-- GALERÍA -->
+<section id="galeria">
+  <h2 class="titulo">{{ C.galeria_titulo }}</h2>
+  <div class="galeria">
+    {% for k in ['galeria1','galeria2','galeria3'] %}{% if C[k] %}<img src="{{ src_img(C[k]) }}" alt="Galería">{% endif %}{% endfor %}
+  </div>
+</section>
+{% endblock %}

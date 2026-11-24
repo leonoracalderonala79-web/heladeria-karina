@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="caja">
+  <h2>💳 Pasarela de pago</h2>
+  <p>Pedido N.º {{ p.id }} · Monto: <strong>S/ {{ '%.2f'|format(p.total) }}</strong></p>
+  <p><small>Entorno de pruebas: no se realiza ningún cobro real. Tarjeta de prueba: 4111 1111 1111 1111, venc. 12/30, CVV 123.</small></p>
+  <form method="post" class="formulario">
+    <label>Número de tarjeta <input name="tarjeta" required inputmode="numeric" maxlength="23" placeholder="4111 1111 1111 1111"></label>
+    <label>Vencimiento (MM/AA) <input name="venc" required maxlength="5" placeholder="12/30"></label>
+    <label>CVV <input name="cvv" required maxlength="4" inputmode="numeric" type="password"></label>
+    <button class="btn">Pagar S/ {{ '%.2f'|format(p.total) }}</button>
+  </form>
+</div>
+{% endblock %}

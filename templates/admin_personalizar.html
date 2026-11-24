@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Personalizar la página</h2>
+<a href="{{ url_for('admin') }}">← Pedidos</a> | <a href="{{ url_for('admin_productos') }}">Editar productos</a>
+<form method="post" enctype="multipart/form-data" class="formulario" style="max-width:560px;margin-top:16px">
+  <h3>Textos</h3>
+  {% for clave, nombre in textos %}
+  <label>{{ nombre }} <input name="{{ clave }}" value="{{ C[clave] }}"></label>
+  {% endfor %}
+  <h3>Imágenes (sube desde tu laptop)</h3>
+  {% for clave, nombre in imagenes %}
+  <div class="caja">
+    <strong>{{ nombre }}</strong><br>
+    {% if C[clave] %}<img src="{{ src_img(C[clave]) }}" width="120" alt=""><br>{% endif %}
+    <label>Subir foto nueva <input type="file" name="{{ clave }}" accept="image/*"></label>
+    <label>…o nombre en static/img/ o enlace <input name="{{ clave }}_ruta" placeholder="foto.jpg o https://..."></label>
+    <label><input type="checkbox" name="{{ clave }}_quitar"> Quitar esta imagen</label>
+  </div>
+  {% endfor %}
+  <button class="btn">Guardar cambios</button>
+</form>
+{% endblock %}

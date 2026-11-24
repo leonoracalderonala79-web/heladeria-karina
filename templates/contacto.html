@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="caja">
+  <h2>Contacto y ubicación</h2>
+  <p>📍 {{ N.direccion }}</p>
+  <p>📞 {{ N.telefono }}</p>
+  <p>🕒 {{ N.horario }}</p>
+  <a class="btn" href="{{ C.whatsapp }}" target="_blank">Escríbenos por WhatsApp</a>
+</div>
+{% endblock %}
+

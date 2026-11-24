@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ C.titulo }} – Heladería Karina – Helados en Satipo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<!-- PRIMER ENCABEZADO: logo, nombre y eslogan (se editan en /admin/personalizar) -->
+<header class="encabezado">
+  <div class="perfil-info">
+    {% if C.logo %}<img class="perfil" src="{{ src_img(C.logo) }}" alt="Logo">{% endif %}
+    <div><h1>{{ C.titulo }}</h1><p>{{ C.lema }}</p></div>
+  </div>
+  <div class="slogans">
+    <div class="slogan-1"><b>{{ C.slogan }}</b></div>
+    <div class="slogan-2"><b>{{ C.slogan2 }}</b></div>
+  </div>
+</header>
+<!-- SEGUNDO ENCABEZADO: navegación -->
+<nav class="barra">
+  <div>
+    <a href="{{ url_for('inicio') }}">PRODUCTOS</a>
+    <a href="{{ url_for('inicio') }}#galeria">GALERÍA</a>
+    <a href="{{ url_for('contacto') }}">CONTACTO</a>
+    <a href="{{ url_for('carrito') }}">🛒 CARRITO ({{ n_carrito }})</a>
+  </div>
+  <div>
+    <a href="{{ C.facebook }}" target="_blank"><img src="{{ url_for('static', filename='img/facebook.jpeg') }}" width="30" alt="Facebook"></a>
+    <a href="{{ C.whatsapp }}" target="_blank"><img src="{{ url_for('static', filename='img/was.jpg') }}" width="30" alt="whatsapp"></a>
+  </div>
+</nav>
+<main>
+  {% for m in get_flashed_messages() %}<div class="aviso">{{ m }}</div>{% endfor %}
+  {% block contenido %}{% endblock %}
+</main>
+<footer>
+  <div class="mapa">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.063791468548!2d-74.64180028977216!3d-11.256717727647576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910bc10fe77aef45%3A0x43083ae2f1ef4156!2sHelader%C3%ADa%20Karina%20Satipo%20%7C%20Helados%20Deliciosos%20en%20Jun%C3%ADn%2C%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1795540650106!5m2!1ses!2spe"
+      width="100%" height="300"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin"
+      title="Ubicación de Heladería Karina">
+    </iframe>
+  </div>
+  <p>{{ C.titulo }} EIRL · {{ N.direccion }} · <a href="{{ url_for('admin') }}">Administración</a></p>
+</footer>
+</body>
+</html>

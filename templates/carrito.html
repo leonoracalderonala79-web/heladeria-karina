@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Tu carrito</h2>
+{% if items %}
+<table>
+  <tr><th>Producto</th><th>Cant.</th><th>Subtotal</th><th></th></tr>
+  {% for i in items %}
+  <tr><td>{{ i.icono }} {{ i.nombre }}</td>
+    <td><a href="{{ url_for('cambiar', pid=i.id, accion='menos') }}">−</a> {{ i.cant }} <a href="{{ url_for('cambiar', pid=i.id, accion='mas') }}">+</a></td>
+    <td>S/ {{ '%.2f'|format(i.sub) }}</td>
+    <td><a href="{{ url_for('cambiar', pid=i.id, accion='quitar') }}">Quitar</a></td></tr>
+  {% endfor %}
+  <tr><th colspan="2">Total</th><th colspan="2">S/ {{ '%.2f'|format(total) }}</th></tr>
+</table>
+<a class="btn" href="{{ url_for('pedido') }}">Hacer pedido</a>
+{% else %}<p>Tu carrito está vacío. <a href="{{ url_for('inicio') }}">Ver productos</a></p>{% endif %}
+{% endblock %}

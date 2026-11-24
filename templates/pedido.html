@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Datos del pedido</h2>
+<p>Total: <strong>S/ {{ '%.2f'|format(total) }}</strong></p>
+<form method="post" class="formulario">
+  <label>Nombre completo <input name="nombre" required value="{{ f.get('nombre','') }}"></label>
+  <label>Celular (9 dígitos) <input name="telefono" required maxlength="9" pattern="[0-9]{9}" value="{{ f.get('telefono','') }}"></label>
+  <label>Hora de recojo (mínimo 5 minutos desde ahora) <input type="time" name="hora" required value="{{ f.get('hora','') }}"></label>
+  <fieldset><legend>Método de pago</legend>
+        <label><input type="radio" name="metodo" value="efectivo" {{ 'checked' if f.get('metodo','efectivo') == 'efectivo' }} onclick="mostrar()"> Efectivo al recoger en el local</label>
+    <label><input type="radio" name="metodo" value="yape" {{ 'checked' if f.get('metodo') == 'yape' }} onclick="mostrar()"> Yape / Plin</label>
+    <label><input type="radio" name="metodo" value="tarjeta" {{ 'checked' if f.get('metodo') == 'tarjeta' }} onclick="mostrar()"> Tarjeta (pasarela de pago)</label>
+  </fieldset>
+  <div id="bloque-yape" class="caja" style="display:none">
+    <p>Yapea o Plinea <strong>S/ {{ '%.2f'|format(total) }}</strong> al <strong>{{ N.yape }}</strong></p>
+    <img src="{{ url_for('static', filename='img/' + N.qr_yape) }}" width="180" alt="QR Yape">
+    <label>N.º de operación <input name="operacion" inputmode="numeric" maxlength="12"></label>
+  </div>
+  <button class="btn">Confirmar pedido</button>
+</form>
+<script>
+function mostrar(){ // muestra el bloque de Yape solo si se eligió Yape
+  document.getElementById('bloque-yape').style.display =
+    document.querySelector('input[name=metodo]:checked').value === 'yape' ? 'block' : 'none';
+}
+mostrar();
+</script>
+{% endblock %}
+mostrar();

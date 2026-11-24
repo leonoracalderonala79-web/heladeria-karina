@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Editar productos</h2><a href="{{ url_for('admin') }}">← Volver a pedidos</a> | <a href="{{ url_for('personalizar') }}">Personalizar página</a>
+<form method="post" action="{{ url_for('guardar_producto') }}" enctype="multipart/form-data" class="formulario" style="margin:16px 0">
+  <h3>{{ 'Editar producto' if e else 'Agregar producto' }}</h3>
+  <input type="hidden" name="id" value="{{ e.id if e else '' }}">
+  <input type="hidden" name="imagen_actual" value="{{ e.imagen if e else '' }}">
+  <label>Categoría <input name="cat" required value="{{ e.cat if e else '' }}"></label>
+  <label>Nombre <input name="nombre" required value="{{ e.nombre if e else '' }}"></label>
+  <label>Descripción <input name="descr" value="{{ e.descr if e else '' }}"></label>
+  <label>Precio (S/) <input name="precio" type="number" step="0.10" min="0" required value="{{ e.precio if e else '' }}"></label>
+  <label>Emoji (si no hay foto) <input name="icono" value="{{ e.icono if e else '🍦' }}"></label>
+  <label>Foto del producto (png, jpg, webp) <input type="file" name="imagen" accept="image/*"></label>
+  <label>…o escribe el nombre de una imagen de static/img/ o un enlace
+    <input name="imagen_ruta" placeholder="helado_fresa.jpg  o  https://..." value="{{ e.imagen if e else '' }}"></label>
+  <button class="btn">Guardar</button>
+</form>
+<table>
+  <tr><th>Foto</th><th>Producto</th><th>Categoría</th><th>Precio</th><th></th></tr>
+  {% for p in productos %}
+  <tr><td>{% if p.imagen %}<img src="{{ src_img(p.imagen) }}" width="50">{% else %}{{ p.icono }}{% endif %}</td>
+    <td>{{ p.nombre }}</td><td>{{ p.cat }}</td><td>S/ {{ '%.2f'|format(p.precio) }}</td>
+    <td><a href="{{ url_for('admin_productos', editar=p.id) }}">Editar</a> | <a href="{{ url_for('borrar_producto', pid=p.id) }}" onclick="return confirm('¿Borrar?')">Borrar</a></td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

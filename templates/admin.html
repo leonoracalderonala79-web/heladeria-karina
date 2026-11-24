@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Pedidos recibidos</h2> <a href="{{ url_for('admin_productos') }}">Editar productos</a> | <a href="{{ url_for('personalizar') }}">Personalizar página</a> | <a href="{{ url_for('salir') }}">Cerrar sesión</a>
+<table>
+  <tr><th>N.º</th><th>Cliente</th><th>Celular</th><th>Detalle</th><th>Recojo</th><th>Total</th><th>Pago</th><th>Estado</th></tr>
+  {% for p in pedidos %}
+  <tr><td>{{ p.id }}</td><td>{{ p.cliente }}</td><td>{{ p.telefono }}</td><td>{{ p.detalle }}</td>
+    <td>{{ p.hora_recojo }}</td><td>S/ {{ '%.2f'|format(p.total) }}</td>
+    <td>{{ p.metodo }}<br>{{ p.pago }} {{ p.referencia }}<br><a href="{{ url_for('estado', pid=p.id, campo='pago', valor='Pagado') }}">Marcar pagado</a></td>
+    <td>{{ p.estado }}<br>
+      <a href="{{ url_for('estado', pid=p.id, campo='estado', valor='Listo') }}">Listo</a> |
+      <a href="{{ url_for('estado', pid=p.id, campo='estado', valor='Entregado') }}">Entregado</a></td></tr>
+  {% else %}<tr><td colspan="8">Aún no hay pedidos.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
